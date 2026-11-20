@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Human Archive Egocentric Dataset</title>
+<meta name="description" content="Composition of the 15,000-hour Human Archive egocentric dataset: categories, environments, scenes and tasks across the stereo and multi-camera + wrist components.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f7f7f5;--card:#ffffff;--ink:#16181d;--muted:#5d6370;--line:#e4e4e0;--accent:#2f5bea;--accent2:#14a37f;--bar:#dbe3fd;--bar2:#cdeee4;--chip:#eef1fb}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0f1115;--card:#171a20;--ink:#eceef2;--muted:#9aa1ad;--line:#262a33;--accent:#7c9cff;--accent2:#3fd3aa;--bar:#25304f;--bar2:#1d3a33;--chip:#1e2433}}
+:root[data-theme="dark"]{--bg:#0f1115;--card:#171a20;--ink:#eceef2;--muted:#9aa1ad;--line:#262a33;--accent:#7c9cff;--accent2:#3fd3aa;--bar:#25304f;--bar2:#1d3a33;--chip:#1e2433}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+header{padding:56px 0 28px}
+h1{font-size:34px;line-height:1.15;margin:0 0 10px;letter-spacing:-.02em}
+h2{font-size:22px;margin:0 0 6px;letter-spacing:-.01em}
+h3{font-size:16px;margin:0 0 10px}
+.lede{color:var(--muted);max-width:760px;margin:0}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:28px 0 8px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+.kpi .v{font-size:26px;font-weight:700;letter-spacing:-.02em}
+.kpi .l{color:var(--muted);font-size:13px}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0 0}
+.mod{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+.mod .t{font-weight:600}.mod .h{font-size:22px;font-weight:700}.mod p{margin:6px 0 0;color:var(--muted);font-size:13.5px}
+nav.tabs{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);margin-top:28px}
+nav.tabs .wrap{display:flex;gap:4px;overflow-x:auto}
+nav.tabs button{background:none;border:0;color:var(--muted);font:600 14px Inter,sans-serif;padding:14px 14px;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap}
+nav.tabs button.on{color:var(--ink);border-bottom-color:var(--accent)}
+section{padding:28px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:16px}
+.sub{color:var(--muted);font-size:13.5px;margin:0 0 14px}
+.bars{display:flex;flex-direction:column;gap:6px}
+.row{display:grid;grid-template-columns:minmax(120px,260px) 1fr 140px;gap:10px;align-items:center;font-size:13.5px}
+.row .n{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row .track{height:14px;background:transparent;border-radius:4px;position:relative}
+.row .fill{height:100%;border-radius:4px;background:var(--accent)}
+.row .num{color:var(--muted);text-align:right;font-variant-numeric:tabular-nums}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line)}
+th{color:var(--muted);font-weight:600;font-size:12.5px;text-transform:uppercase;letter-spacing:.03em}
+td.r,th.r{text-align:right;font-variant-numeric:tabular-nums}
+.tools{display:flex;gap:10px;align-items:center;margin-bottom:10px;flex-wrap:wrap}
+input[type=search]{flex:1;min-width:200px;padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:14px Inter,sans-serif}
+select{padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:14px Inter,sans-serif}
+.scroll{max-height:520px;overflow:auto;border:1px solid var(--line);border-radius:8px}
+.scroll table th{position:sticky;top:0;background:var(--card)}
+.chip{display:inline-block;background:var(--chip);border-radius:999px;padding:2px 9px;font-size:12px;margin:2px 4px 2px 0}
+.cat{margin-bottom:14px}.cat .ct{font-weight:600;margin-bottom:4px}
+.mini{height:8px;background:var(--bar);border-radius:4px;overflow:hidden;margin-top:3px}.mini>div{height:100%;background:var(--accent)}
+footer{color:var(--muted);font-size:13px;padding:40px 0 60px;border-top:1px solid var(--line);margin-top:20px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.seg button{background:var(--card);border:0;padding:8px 12px;font:600 13px Inter,sans-serif;color:var(--muted);cursor:pointer}
+.seg button.on{background:var(--accent);color:#fff}
+@media (max-width:760px){h1{font-size:27px}.split,.grid2{grid-template-columns:1fr}.row{grid-template-columns:minmax(90px,1fr) 1fr 92px}header{padding:36px 0 18px}}
+</style>
+</head>
+<body>
+<header class="wrap">
+  <h1>Human Archive Egocentric Dataset</h1>
+  <p class="lede">15,000 hours of first-person video of people doing real work in real businesses across India, recorded with head-mounted stereo cameras and a multi-camera rig with wrist cameras, with 3D hand keypoints, camera pose, IMU and dense action annotations. This page breaks the dataset down by category, environment, scene and task.</p>
+  <div class="kpis" id="kpis"></div>
+  <div class="split" id="mods"></div>
+</header>
+<nav class="tabs"><div class="wrap" id="tabs"></div></nav>
+<main class="wrap" id="main"></main>
+<footer class="wrap">Hours are measured on delivered clip duration. Category = industry category; environment = venue type within a category; scene = the work area shown; task = the activity performed. Shares are computed over hours.</footer>
+<script>
+const fmt=n=>n>=100?Math.round(n).toLocaleString():n>=10?n.toFixed(1):n.toFixed(2);
+const pct=s=>(s*100>=1?(s*100).toFixed(1):(s*100).toFixed(2))+'%';
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let D,VIEW='combined';
+const NAMES={combined:'Full dataset',stereo:'Stereo',multicam:'Multi-camera + wrist'};
+function bars(rows,key,limit,color){const top=rows.slice(0,limit),mx=Math.max(...top.map(r=>r.hours),1);
+ return '<div class="bars">'+top.map(r=>`<div class="row"><div class="n" title="${esc(r[key])}">${esc(r[key])}</div><div class="track"><div class="fill" style="width:${(r.hours/mx*100).toFixed(1)}%;${color?'background:'+color:''}"></div></div><div class="num">${fmt(r.hours)} h · ${pct(r.share)}</div></div>`).join('')+'</div>';}
+function table(id,rows,cols){return `<div class="tools"><input type="search" placeholder="Search…" oninput="filt('${id}',this.value)"><span class="sub" id="${id}-n">${rows.length.toLocaleString()} rows</span></div><div class="scroll"><table id="${id}"><thead><tr>${cols.map(c=>`<th class="${c.r?'r':''}">${c.t}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${cols.map(c=>`<td class="${c.r?'r':''}">${c.f?c.f(r):esc(r[c.k])}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;}
+function filt(id,q){q=q.toLowerCase();let n=0;document.querySelectorAll('#'+id+' tbody tr').forEach(tr=>{const s=tr.textContent.toLowerCase().includes(q);tr.style.display=s?'':'none';if(s)n++;});document.getElementById(id+'-n').textContent=n.toLocaleString()+' rows';}
+function kpis(){const c=D.combined,u=c.unique,s=D.stereo,m=D.multicam;
+ const k=[['Hours',fmt(c.hours)],['Clips',c.clips.toLocaleString()],['Categories',u.categories],['Environments',u.environments],['Scenes',u.scenes],['Tasks',u.tasks],['Scene × task pairs',u.scene_task_pairs.toLocaleString()],['Businesses',u.businesses],['Cities',u.cities]];
+ document.getElementById('kpis').innerHTML=k.map(([l,v])=>`<div class="kpi"><div class="v">${v}</div><div class="l">${l}</div></div>`).join('');
+ document.getElementById('mods').innerHTML=`<div class="mod"><div class="t">Stereo</div><div class="h">${fmt(s.hours)} h</div><p>Head-mounted stereo camera. Per clip: left/right fisheye video, head IMU, calibration, 3D and 2D hand keypoints with per-frame camera pose, dense action steps, and scene / task / environment metadata. ${s.clips.toLocaleString()} clips · ${s.unique.businesses} businesses · ${s.unique.scenes} scenes · ${s.unique.tasks} tasks.</p></div><div class="mod"><div class="t">Multi-camera + wrist</div><div class="h">${fmt(m.hours)} h</div><p>Six hardware-synchronised head cameras (forward stereo, downward, side) plus wrist cameras, head and wrist IMUs, calibration, 3D hand keypoints projected into every head camera, camera pose, dense action steps and site labels. ${m.clips.toLocaleString()} recordings · ${m.unique.businesses} businesses · ${m.unique.scenes} scenes · ${m.unique.tasks} tasks.</p></div>`;}
+function tabs(){document.getElementById('tabs').innerHTML=Object.keys(NAMES).map(k=>`<button class="${k===VIEW?'on':''}" onclick="VIEW='${k}';tabs();render()">${NAMES[k]}</button>`).join('');}
+function envGroups(rows){const g={};rows.forEach(r=>{(g[r.L1]=g[r.L1]||[]).push(r)});return Object.entries(g).map(([k,v])=>[k,v,v.reduce((a,b)=>a+b.hours,0)]).sort((a,b)=>b[2]-a[2]);}
+function render(){const d=D[VIEW],u=d.unique;
+ const envs=envGroups(d.by_environment);
+ document.getElementById('main').innerHTML=`
+ <section><h2>${NAMES[VIEW]}</h2><p class="sub">${fmt(d.hours)} hours · ${d.clips.toLocaleString()} ${VIEW==='multicam'?'recordings':'clips'} · ${u.categories} categories · ${u.environments} environments · ${u.scenes} scenes · ${u.tasks} tasks · ${u.scene_task_pairs.toLocaleString()} scene × task pairs · ${u.businesses} businesses · ${u.cities} cities</p>
+ <div class="card"><h3>Categories</h3><p class="sub">Hours by industry category.</p>${bars(d.by_category,'L1',40)}</div>
+ <div class="card"><h3>Environments by category</h3><p class="sub">Venue types within each category, by hours.</p><div class="grid2">${envs.map(([c,v,t])=>`<div class="cat"><div class="ct">${esc(c)} <span class="sub">· ${fmt(t)} h</span></div>${v.slice(0,8).map(r=>`<div style="font-size:13px;display:flex;justify-content:space-between;gap:8px"><span>${esc(r.L2)}</span><span class="sub" style="margin:0">${fmt(r.hours)} h</span></div><div class="mini"><div style="width:${(r.hours/t*100).toFixed(1)}%"></div></div>`).join('')}</div>`).join('')}</div></div>
+ <div class="grid2"><div class="card"><h3>Top scenes</h3><p class="sub">${u.scenes} distinct scenes.</p>${bars(d.by_scene,'scene',25)}</div><div class="card"><h3>Top tasks</h3><p class="sub">${u.tasks} distinct tasks.</p>${bars(d.by_task,'task',25,'var(--accent2)')}</div></div>
+ <div class="card"><h3>All scenes</h3>${table('t-scene-'+VIEW,d.by_scene,[{t:'Scene',k:'scene'},{t:'Hours',r:1,f:r=>fmt(r.hours)},{t:'Share',r:1,f:r=>pct(r.share)}])}</div>
+ <div class="card"><h3>All tasks</h3>${table('t-task-'+VIEW,d.by_task,[{t:'Task',k:'task'},{t:'Hours',r:1,f:r=>fmt(r.hours)},{t:'Share',r:1,f:r=>pct(r.share)}])}</div>
+ <div class="card"><h3>Scenes by category</h3>${table('t-cs-'+VIEW,d.by_category_scene,[{t:'Category',k:'L1'},{t:'Scene',k:'scene'},{t:'Hours',r:1,f:r=>fmt(r.hours)},{t:'Share',r:1,f:r=>pct(r.share)}])}</div>
+ <div class="card"><h3>Top scene × task pairs</h3><p class="sub">${u.scene_task_pairs.toLocaleString()} distinct scene × task pairs; the 300 largest are listed.</p>${table('t-st-'+VIEW,d.top_scene_task,[{t:'Scene',k:'scene'},{t:'Task',k:'task'},{t:'Hours',r:1,f:r=>fmt(r.hours)},{t:'Share',r:1,f:r=>pct(r.share)}])}</div>
+ <div class="card"><h3>All environments</h3>${table('t-env-'+VIEW,d.by_environment,[{t:'Category',k:'L1'},{t:'Environment',k:'L2'},{t:'Hours',r:1,f:r=>fmt(r.hours)},{t:'Share',r:1,f:r=>pct(r.share)}])}</div>
+ </section>`;}
+fetch('stats.json').then(r=>r.json()).then(j=>{D=j;kpis();tabs();render();});
+</script>
+</body>
+</html>
