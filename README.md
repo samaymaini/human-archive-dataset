@@ -18,8 +18,8 @@ Live page: https://samaymaini.github.io/human-archive-dataset/
 | Environment types | 112 | 82 | 87 |
 | Distinct scenes | 5,812 | 3,560 | 2,802 |
 | Distinct scene × task pairs | 15,415 | 10,034 | 6,374 |
-| Task categories | 806 | 516 | 588 |
-| Task descriptions | 15,837 | 11,477 | 4,360 |
+| Task categories | 27,375 | 7,954 | 20,952 |
+| Task descriptions | 920,819 | 449,545 | 471,274 |
 
 ## Categories (full dataset)
 
